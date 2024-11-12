@@ -26,14 +26,12 @@ export const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(signUp.pending, (state) => {
-                state.loading = true;
                 state.error = null;
                 state.isAuthChecked = false;
             })
             .addCase(
                 signUp.rejected,
                 (state, action: PayloadAction<string>) => {
-                    state.loading = false;
                     state.error = action.payload;
                     state.isAuthChecked = true;
                     state.email = null;
@@ -42,7 +40,6 @@ export const userSlice = createSlice({
                 }
             )
             .addCase(signUp.fulfilled, (state, action) => {
-                state.loading = false;
                 state.email = action.payload.data.user.email;
                 state.id = action.payload.data.user.id;
                 state.name = action.payload.data.user.user_metadata.name;
@@ -76,12 +73,10 @@ export const userSlice = createSlice({
             });
         builder
             .addCase(signInWithEmail.pending, (state) => {
-                state.loading = true;
                 state.error = null;
                 state.isAuthChecked = false;
             })
             .addCase(signInWithEmail.rejected, (state, action) => {
-                state.loading = false;
                 state.error = action.payload || "something went wrong";
                 state.isAuthChecked = true;
                 state.email = null;
@@ -89,7 +84,6 @@ export const userSlice = createSlice({
                 state.name = null;
             })
             .addCase(signInWithEmail.fulfilled, (state, action) => {
-                state.loading = false;
                 state.error = null;
                 state.email = action.payload.data.user.email;
                 state.id = action.payload.data.user.id;

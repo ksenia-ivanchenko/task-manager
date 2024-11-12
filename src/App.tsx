@@ -1,41 +1,34 @@
 import { useEffect } from "react";
-import "./App.css";
-import { useDispatch } from "./store";
-import { getUser, logOut, signInWithEmail, signUp } from "./store/slices";
+import { useDispatch, useSelector } from "./store";
+import { getUser } from "./store/slices";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { ProtectedRoute } from "./components";
+import { AuthPage, HomePage } from "./pages";
+import { Preloader } from "./components/ui";
 
 function App() {
     const dispatch = useDispatch();
+    const { loading } = useSelector((state) => state.user);
     useEffect(() => {
         dispatch(getUser());
-    });
+    }, [dispatch]);
+
+    if (loading) return <Preloader loading={loading} />;
 
     return (
         <>
-            <button
-                onClick={() =>
-                    dispatch(
-                        signUp({
-                            email: "anotheruser@test.com",
-                            password: "anotheruser",
-                        })
-                    )
-                }
-            >
-                зарегистрировать
-            </button>
-            <button
-                onClick={() =>
-                    dispatch(
-                        signInWithEmail({
-                            email: "testmail@test.com",
-                            password: "testpassword",
-                        })
-                    )
-                }
-            >
-                войти в testmail
-            </button>
-            <button onClick={() => dispatch(logOut())}>выйти</button>
+            <Routes>
+                <Route path="/" element={<Navigate to="/auth" replace />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route
+                    path="/auth"
+                    element={
+                        <ProtectedRoute type="unauth">
+                            <AuthPage />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
         </>
     );
 }
