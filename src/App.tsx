@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "./store";
 import { getUser } from "./store/slices";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ProtectedRoute } from "./components";
+import { Layout, ProtectedRoute } from "./components";
 import { AuthPage, HomePage } from "./pages";
 import { Preloader } from "./components/ui";
 
@@ -19,13 +19,22 @@ function App() {
         <>
             <Routes>
                 <Route path="/" element={<Navigate to="/auth" replace />} />
-                <Route path="/home" element={<HomePage />} />
+                <Route
+                    path="/home"
+                    element={
+                        <Layout>
+                            <HomePage />
+                        </Layout>
+                    }
+                />
                 <Route
                     path="/auth"
                     element={
-                        <ProtectedRoute type="unauth">
-                            <AuthPage />
-                        </ProtectedRoute>
+                        <Layout hideHeader>
+                            <ProtectedRoute type="unauth">
+                                <AuthPage />
+                            </ProtectedRoute>
+                        </Layout>
                     }
                 />
             </Routes>

@@ -7,10 +7,10 @@ export const HomePage: FC = () => {
     const dispatch = useDispatch();
 
     return (
-        <main>
+        <div>
             <button onClick={() => dispatch(logOut())}>
                 Выйти из аккаунта
             </button>
-        </main>
+        </div>
     );
 };

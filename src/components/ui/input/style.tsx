@@ -1,15 +1,15 @@
 import styled from "styled-components";
+import { COLORS } from "../constants";
 
 export const StyledWrapper = styled.div`
+    inline-size: 100%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
     position: relative;
 `;
 
 export const StyledLabel = styled.label`
-    color: #3a506b;
-    margin-bottom: 4px;
+    color: ${COLORS.MAIN_DARK};
     position: absolute;
     left: 15px;
     pointer-events: none;
@@ -18,10 +18,10 @@ export const StyledLabel = styled.label`
 `;
 
 export const StyledInput = styled.input<{ type?: string }>`
-    border: 1px solid #accbee;
+    border: 1px solid ${COLORS.INPUT_BORDER};
     border-radius: 4px;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    background: #f9f9ff;
+    transition: all 0.2s ease-in-out;
+    background: transparent;
     padding: 15px;
 
     ${({ type }) =>
@@ -32,43 +32,44 @@ export const StyledInput = styled.input<{ type?: string }>`
     &:focus,
     :valid {
         outline: none;
-        border-color: #5c8bc7;
-        box-shadow: 0 4px 10px rgba(92, 139, 199, 0.2);
+        border-color: ${COLORS.INPUT_LABEL_FOCUS};
+        box-shadow: 0 4px 10px ${COLORS.SHADOW};
     }
 
     &:focus ~ label {
-        color: #5c8bc7;
+        color: ${COLORS.INPUT_LABEL_FOCUS};
         transform: translateX(-10%) translateY(-50%) scale(0.9);
         padding: 0 0.2em;
-        background-color: #f9f9ff;
+        background-color: ${COLORS.LIGHT_BACKGROUND};
     }
 
     &:not(:placeholder-shown) ~ label {
-        color: #5c8bc7;
+        color: ${COLORS.INPUT_LABEL_FOCUS};
         transform: translateX(-10%) translateY(-50%) scale(0.9);
         padding: 0 0.2em;
-        background-color: #f9f9ff;
+        background-color: ${COLORS.LIGHT_BACKGROUND};
     }
 
+    // убираем заливку инпутов дефолтными браузерными цветами при автозаполнении
     &:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px #f9f9ff inset;
-        box-shadow: 0 0 0px 1000px #f9f9ff inset;
+        -webkit-box-shadow: 0 0 0px 1000px ${COLORS.LIGHT_BACKGROUND} inset;
+        box-shadow: 0 0 0px 1000px ${COLORS.LIGHT_BACKGROUND} inset;
         -webkit-text-fill-color: black;
     }
 
     &:-moz-autofill {
-        box-shadow: 0 0 0px 1000px #f9f9ff inset;
+        box-shadow: 0 0 0px 1000px ${COLORS.LIGHT_BACKGROUND} inset;
         color: black;
     }
 
     &:-ms-autofill {
-        box-shadow: 0 0 0px 1000px #f9f9ff inset;
+        box-shadow: 0 0 0px 1000px ${COLORS.LIGHT_BACKGROUND} inset;
         color: black;
     }
 `;
 
 export const StyledErrorMessage = styled.span`
-    color: #d9534f;
+    color: ${COLORS.ERROR_MESSAGE};
     font-size: 12px;
     margin-top: 4px;
     position: absolute;
@@ -83,6 +84,6 @@ export const PasswordToggleButton = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    color: #5c8bc7;
+    color: ${COLORS.INPUT_LABEL_FOCUS};
     scale: 1.3;
 `;

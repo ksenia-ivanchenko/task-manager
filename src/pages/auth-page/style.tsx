@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
-export const StyledAuth = styled.main`
+export const StyledAuth = styled.div`
     background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
     width: 100%;
-    height: 100vh;
+    height: 100%;
     padding: 1.5rem;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;

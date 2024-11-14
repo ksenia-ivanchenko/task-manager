@@ -1,0 +1,16 @@
+export enum COLORS {
+    LIGHT_BACKGROUND = "#f9f9ff",
+    MAIN_DARK = "#3a506b",
+    SHADOW = "rgba(92, 139, 199, 0.2)",
+    SHADOW_HOVER = "rgba(92, 139, 199, 0.4)",
+    BUTTON_PRIMARY = "#4a90e2",
+    BUTTON_SECONDARY = "#a3c8e7",
+    BUTTON_PRIMARY_HOVER = "#4183c4",
+    BUTTON_SECONDARY_HOVER = "9ab8d8",
+    BUTTON_SECONDARY_ACTIVE = "8b9bc8",
+    BUTTON_DISABLED = "#d0dbe9",
+    INPUT_BORDER = "#accbee",
+    INPUT_LABEL_FOCUS = "#5c8bc7",
+    ERROR_MESSAGE = "#d9534f",
+    PRELOADER = "#4183c4",
+}
