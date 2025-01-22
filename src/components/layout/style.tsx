@@ -7,6 +7,6 @@ export const LayoutWrapper = styled.div`
 `;
 
 export const StyledMain = styled.main`
-    flex: 1; /* Главный контент будет растягиваться на оставшееся пространство */
-    overflow-y: auto; /* Для добавления прокрутки, если контента будет слишком много */
+    flex: 1;
+    overflow-y: auto;
 `;

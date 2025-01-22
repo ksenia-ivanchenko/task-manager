@@ -16,12 +16,28 @@ import {
 } from "./style";
 import { Button, Input } from "../ui";
 import { COLORS } from "../ui/constants";
+import { useDispatch } from "../../store";
+import { logOut } from "../../store/slices";
+import { AddNewTaskForm } from "..";
+import { Modal } from "../modal";
 
 export const Header: FC = () => {
-    const [isMenuOpen, setMenuOpen] = useState(false);
+    const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const dispatch = useDispatch();
 
-    const handleMouseEnter = () => setMenuOpen(true);
-    const handleMouseLeave = () => setMenuOpen(false);
+    const handleProfileMouseEnter = () => setProfileMenuOpen(true);
+    const handleProfileMouseLeave = () => setProfileMenuOpen(false);
+
+    const searchTask = (e) => {
+        e.preventDefault();
+        // логика поиска задачи
+    };
+
+    const handleAddNewTask = () => {
+        console.log("add new task");
+        setShowModal(false);
+    };
 
     return (
         <HeaderContainer>
@@ -30,7 +46,7 @@ export const Header: FC = () => {
                 <span>MyTasks</span>
             </Logo>
 
-            <SearchWrapper noValidate>
+            <SearchWrapper noValidate onSubmit={searchTask}>
                 <Input type="text" label="Найти задачу" />
                 <Button
                     variant="icon"
@@ -38,6 +54,7 @@ export const Header: FC = () => {
                         position: "relative",
                         right: "50px",
                     }}
+                    type="submit"
                 >
                     <MdSearch
                         size={25}
@@ -49,25 +66,43 @@ export const Header: FC = () => {
             </SearchWrapper>
 
             <IconWrapper>
-                <Button variant="icon">
+                <Button variant="icon" onClick={() => setShowModal(true)}>
                     <MdAddTask size={25} style={{ color: COLORS.MAIN_DARK }} />
                 </Button>
-                <ProfileIconContainer
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <Button variant="icon">
+
+                <ProfileIconContainer onMouseLeave={handleProfileMouseLeave}>
+                    <Button
+                        variant="icon"
+                        onMouseEnter={handleProfileMouseEnter}
+                    >
                         <MdAccountCircle
                             size={25}
                             style={{ color: COLORS.MAIN_DARK }}
                         />
                     </Button>
-                    <DropdownMenu $show={isMenuOpen}>
-                        <DropdownItem>Редактировать</DropdownItem>
-                        <DropdownItem>Выйти</DropdownItem>
+                    <DropdownMenu $show={isProfileMenuOpen}>
+                        <DropdownItem disabled={!isProfileMenuOpen}>
+                            Редактировать
+                        </DropdownItem>
+                        <DropdownItem
+                            disabled={!isProfileMenuOpen}
+                            onClick={() => dispatch(logOut())}
+                        >
+                            Выйти
+                        </DropdownItem>
                     </DropdownMenu>
                 </ProfileIconContainer>
             </IconWrapper>
+            {showModal && (
+                <Modal
+                    title="Добавить задачу"
+                    onClose={() => setShowModal(false)}
+                >
+                    <AddNewTaskForm
+                        onSubmit={handleAddNewTask}
+                    ></AddNewTaskForm>
+                </Modal>
+            )}
         </HeaderContainer>
     );
 };

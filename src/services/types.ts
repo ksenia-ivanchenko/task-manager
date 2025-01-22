@@ -36,19 +36,19 @@ export type TUpdateTaskData = {
     board_id?: string;
 };
 
-export interface IUserProfile {
+export type TUserProfile = {
     email: string;
     id: string;
     name: string;
-}
+};
 
-export interface IBoard {
+export type TBoard = {
     id: string;
     name: string;
     user_id: string;
-}
+};
 
-export interface ITask {
+export type TTask = {
     board_id: string;
     completed: boolean;
     created_at: string;
@@ -57,4 +57,4 @@ export interface ITask {
     id: string;
     title: string;
     user_id: string;
-}
+};

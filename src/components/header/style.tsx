@@ -32,6 +32,10 @@ export const IconWrapper = styled.div`
     gap: 20px;
 `;
 
+export const AddIconContainer = styled.div`
+    position: relative;
+`;
+
 export const ProfileIconContainer = styled.div`
     position: relative;
 `;
@@ -54,6 +58,7 @@ export const DropdownMenu = styled.div<{ $show: boolean }>`
         css`
             opacity: 1;
             transform: translateY(0);
+            cursor: pointer;
         `}
 `;
 
@@ -63,7 +68,6 @@ export const DropdownItem = styled.button`
     padding: 12px;
     inline-size: 100%;
     text-align: left;
-    cursor: pointer;
     transition: all 0.3s;
 
     &:hover {
