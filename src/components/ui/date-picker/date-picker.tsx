@@ -18,7 +18,11 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
                             ? field.value.toISOString().split("T")[0]
                             : ""
                     }
-                    onChange={(e) => field.onChange(new Date(e.target.value))}
+                    onChange={(e) =>
+                        field.onChange(
+                            e.target.value ? new Date(e.target.value) : null
+                        )
+                    }
                     placeholder=""
                     style={{ padding: "8px", borderRadius: "4px" }}
                     aria-label="Выберите дедлайн"
