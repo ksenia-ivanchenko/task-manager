@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createTask, deleteTask, getUserTasks } from "./actions";
+import { createTask, deleteTask, getUserTasks, updateTask } from "./actions";
 import { TTask } from "../../../services/types";
 
 type TTaskState = {
@@ -63,6 +63,32 @@ export const tasksSlice = createSlice({
                 state.error = null;
             })
             .addCase(getUserTasks.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || "что-то пошло не так";
+            });
+        builder
+            .addCase(updateTask.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateTask.fulfilled, (state, action) => {
+                const index = state.tasks.findIndex(
+                    (task) => task.id === action.payload.id
+                );
+                if (index !== -1) {
+                    state.tasks[index] = {
+                        ...state.tasks[index],
+                        title: action.payload.title,
+                        description: action.payload.description,
+                        deadline: action.payload.deadline,
+                        completed: action.payload.completed,
+                        board_id: action.payload.board_id,
+                    };
+                }
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(updateTask.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || "что-то пошло не так";
             });

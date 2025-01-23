@@ -1,21 +1,26 @@
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { IAddNewTaskFormInputs, TAddNewTaskFormProps } from "./types";
+import { TTaskFormInputs, TTaskFormProps } from "./types";
 import { StyledForm } from "./style";
 import { Button, DatePicker, Input, Select, TextArea } from "../ui";
 import { useSelector } from "../../store";
 
-export const AddNewTaskForm: FC<TAddNewTaskFormProps> = ({
-    onSubmit,
-    defaultBoard,
-}) => {
+export const TaskForm: FC<TTaskFormProps> = ({ onSubmit, defaultValues }) => {
     const {
         register,
         handleSubmit,
         formState: { errors, isValid, isSubmitting },
         control,
-    } = useForm<IAddNewTaskFormInputs>({ mode: "onChange" });
-
+    } = useForm<TTaskFormInputs>({
+        mode: "onChange",
+        defaultValues: {
+            board_id: defaultValues?.board,
+            deadline: defaultValues?.deadline,
+            description: defaultValues?.descripton,
+            title: defaultValues?.title,
+        },
+    });
+    const { loading } = useSelector((state) => state.tasks);
     const { boards } = useSelector((state) => state.boards);
     let selectOptions = [];
     for (let board of boards) {
@@ -44,11 +49,10 @@ export const AddNewTaskForm: FC<TAddNewTaskFormProps> = ({
             <Controller
                 name="board_id"
                 control={control}
-                defaultValue={defaultBoard}
                 rules={{ required: "Выберите доску" }}
                 render={({ field }) => (
                     <Select
-                        defaultBoard={defaultBoard}
+                        defaultBoard={defaultValues?.board}
                         options={selectOptions}
                         {...field}
                         placeholder="На какую доску добавим?"
@@ -71,9 +75,9 @@ export const AddNewTaskForm: FC<TAddNewTaskFormProps> = ({
             <Button
                 type="submit"
                 disabled={isSubmitting || !isValid}
-                loading={isSubmitting}
+                loading={loading}
             >
-                Добавить
+                Сохранить
             </Button>
         </StyledForm>
     );

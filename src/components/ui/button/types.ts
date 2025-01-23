@@ -15,5 +15,5 @@ export interface StyledButtonProps {
 }
 
 export interface DeleteButtonProps {
-    onClick: () => void;
+    onClick: (e) => void;
 }

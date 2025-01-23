@@ -18,7 +18,7 @@ import { Button, Input } from "../ui";
 import { COLORS } from "../ui/constants";
 import { useDispatch } from "../../store";
 import { createTask, logOut } from "../../store/slices";
-import { AddNewTaskForm } from "..";
+import { TaskForm } from "../../components";
 import { Modal } from "../modal";
 import { TCreateTaskData } from "../../services/types";
 
@@ -107,7 +107,7 @@ export const Header: FC = () => {
                     title="Добавить задачу"
                     onClose={() => setShowModal(false)}
                 >
-                    <AddNewTaskForm onSubmit={handleAddNewTask} />
+                    <TaskForm onSubmit={handleAddNewTask} />
                 </Modal>
             )}
         </HeaderContainer>

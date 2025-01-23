@@ -5,7 +5,7 @@ import { StyledBoard, Title, TitleContainer } from "./style";
 import { useDispatch, useSelector } from "../../store";
 import { AddButton, Button, DeleteButton, Preloader } from "../ui";
 import { Modal } from "../modal";
-import { AddNewTaskForm } from "../add-new-task-form";
+import { TaskForm } from "../task-form";
 import { TCreateTaskData } from "../../services/types";
 import { createTask, deleteBoard, updateBoard } from "../../store/slices";
 import { MdCreate } from "react-icons/md";
@@ -110,9 +110,9 @@ export const Board: FC<TBoardProps> = ({ boardId, name }) => {
                     title="Добавить задачу"
                     onClose={() => setShowModal(false)}
                 >
-                    <AddNewTaskForm
+                    <TaskForm
                         onSubmit={handleAddNewTask}
-                        defaultBoard={boardId}
+                        defaultValues={{ board: boardId }}
                     />
                 </Modal>
             )}

@@ -9,7 +9,9 @@ export const StyledTextArea = styled.textarea`
     padding: 10px;
     border: 1px solid ${COLORS.INPUT_BORDER};
     border-radius: 4px;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: transparent;
+    resize: none;
 
     &:focus,
     :valid {
@@ -19,6 +21,6 @@ export const StyledTextArea = styled.textarea`
     }
 
     &::placeholder {
-        color: ${COLORS.MAIN_DARK}
+        color: ${COLORS.MAIN_DARK};
     }
 `;

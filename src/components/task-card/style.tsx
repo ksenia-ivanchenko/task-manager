@@ -25,7 +25,7 @@ export const TitleContainer = styled.div`
     align-items: center;
 `;
 
-export const Deadline = styled.div`
+export const Deadline = styled.span`
     color: ${COLORS.SHADOW_HOVER};
     align-self: flex-end;
 `;
