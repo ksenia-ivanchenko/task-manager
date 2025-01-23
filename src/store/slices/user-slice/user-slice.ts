@@ -7,7 +7,7 @@ type TUserState = {
     id: string;
     loading: boolean;
     isAuthChecked: boolean;
-    error: string;
+    error: string | null;
 };
 
 const initialState: TUserState = {
@@ -77,7 +77,7 @@ export const userSlice = createSlice({
                 state.isAuthChecked = false;
             })
             .addCase(signInWithEmail.rejected, (state, action) => {
-                state.error = action.payload || "something went wrong";
+                state.error = action.payload || "что то пошло не так";
                 state.isAuthChecked = true;
                 state.email = null;
                 state.id = null;
@@ -98,8 +98,7 @@ export const userSlice = createSlice({
             })
             .addCase(logOut.rejected, (state, action) => {
                 state.loading = false;
-                state.error =
-                    action.payload || "An error occurred during logout";
+                state.error = action.payload || "что то пошло не так";
             })
             .addCase(logOut.fulfilled, (state) => {
                 state.loading = false;

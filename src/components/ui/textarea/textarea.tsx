@@ -3,7 +3,7 @@ import { StyledTextArea } from "./style";
 import { TextAreaProps } from "./types";
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-    ({ id, name, placeholder, rows = 4, cols = 50 }, ref) => {
+    ({ id, name, placeholder, rows = 4, cols = 50, ...props }, ref) => {
         return (
             <StyledTextArea
                 id={id}
@@ -12,6 +12,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
                 rows={rows}
                 cols={cols}
                 ref={ref}
+                {...props}
             ></StyledTextArea>
         );
     }

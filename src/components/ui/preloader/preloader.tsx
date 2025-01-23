@@ -1,11 +1,15 @@
 import ClipLoader from "react-spinners/ClipLoader";
-import { LoaderContainer } from "./style";
 import { COLORS } from "../constants";
+import { PreloaderContainer } from "./style";
 
-export const Preloader = ({ loading }) => {
+export const Preloader = ({ loading, size = "1em" }) => {
     return (
-        // <LoaderContainer>
-        <ClipLoader color={COLORS.PRELOADER} loading={loading} size="1em" />
-        // </LoaderContainer>
+        <PreloaderContainer>
+            <ClipLoader
+                color={COLORS.PRELOADER}
+                loading={loading}
+                size={size}
+            />
+        </PreloaderContainer>
     );
 };

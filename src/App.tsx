@@ -13,7 +13,12 @@ function App() {
         dispatch(getUser());
     }, [dispatch]);
 
-    if (loading) return <Preloader loading={loading} />;
+    if (loading)
+        return (
+            <div style={{ blockSize: "100vh" }}>
+                <Preloader loading={loading} size="5em" />
+            </div>
+        );
 
     return (
         <>
@@ -23,7 +28,9 @@ function App() {
                     path="/home"
                     element={
                         <Layout>
-                            <HomePage />
+                            <ProtectedRoute type="auth">
+                                <HomePage />
+                            </ProtectedRoute>
                         </Layout>
                     }
                 />

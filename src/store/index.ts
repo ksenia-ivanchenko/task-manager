@@ -1,17 +1,19 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { userSlice } from './slices';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { boardsSlice, tasksSlice, userSlice } from "./slices";
 import {
-  TypedUseSelectorHook,
-  useDispatch as dispatchHook,
-  useSelector as selectorHook,
-} from 'react-redux';
+    TypedUseSelectorHook,
+    useDispatch as dispatchHook,
+    useSelector as selectorHook,
+} from "react-redux";
 
 export const rootReducer = combineReducers({
-  [userSlice.name]: userSlice.reducer,
+    [userSlice.name]: userSlice.reducer,
+    [boardsSlice.name]: boardsSlice.reducer,
+    [tasksSlice.name]: tasksSlice.reducer,
 });
 
 export const store = configureStore({
-  reducer: rootReducer,
+    reducer: rootReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

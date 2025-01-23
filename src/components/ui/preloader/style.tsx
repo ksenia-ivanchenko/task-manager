@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import { styled } from "styled-components";
 
-export const LoaderContainer = styled.div`
+export const PreloaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    block-size: 100%;
 `;

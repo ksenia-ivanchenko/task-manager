@@ -1,7 +1,7 @@
 import {
-    IBoard,
-    ITask,
-    IUserProfile,
+    TBoard,
+    TTask,
+    TUserProfile,
     TCreateBoardData,
     TCreateTaskData,
     TEmailLoginData,
@@ -33,7 +33,7 @@ export const signUpApi = async (
             error,
         };
     }
-    console.log(data);
+
     return {
         data,
         error: null,
@@ -63,14 +63,9 @@ export const updateUserApi = async (updateData: TUpdateUserData) => {
     });
 
     if (data.user) {
-        console.log(
-            `if you're updating email, check your inbox. otherwise, user and session info:`
-        );
-        console.log(data);
         return data;
     }
 
-    console.log(error);
     return error;
 };
 
@@ -91,47 +86,41 @@ export const logOutApi = async (): Promise<string | null> => {
         console.log(error.message);
         return error.message;
     }
-    console.log("you logged out!");
 };
-
 
 export const getProfileDataApi = async (
     userId: string
-): Promise<IUserProfile | null> => {
+): Promise<TUserProfile | null> => {
     const { data: user, error } = await supabase
         .from("users")
         .select("*")
         .eq("id", userId);
 
     if (error || !user || user.length === 0) {
-        console.log(error || "something went wrong");
         return null;
     }
 
-    console.log(user[0]);
     return user[0];
 };
 
 export const createBoardApi = async (
     boardData: TCreateBoardData
-): Promise<IBoard | null> => {
+): Promise<TBoard | null> => {
     const { data, error } = await supabase
         .from("boards")
         .insert([boardData])
         .select();
 
     if (error) {
-        console.log(error);
         return null;
     }
 
-    console.log(data[0]);
     return data[0];
 };
 
 export const updateBoardApi = async (
     boardData: TUpdateBoardData
-): Promise<IBoard | null> => {
+): Promise<TBoard | null> => {
     const { data, error } = await supabase
         .from("boards")
         .update({ name: boardData.name })
@@ -139,28 +128,25 @@ export const updateBoardApi = async (
         .select();
 
     if (error) {
-        console.log(error);
         return null;
     }
 
-    console.log(data[0]);
     return data[0];
 };
 
 export const getUserBoardsApi = async (
     userId: string
-): Promise<IBoard[] | null> => {
+): Promise<TBoard[] | null> => {
     const { data: boards, error } = await supabase
         .from("boards")
         .select("*")
-        .eq("user_id", userId);
+        .eq("user_id", userId)
+        .order("created_at", { ascending: true });
 
     if (error) {
-        console.log(error);
         return null;
     }
 
-    console.log(boards);
     return boards;
 };
 
@@ -168,33 +154,28 @@ export const deleteBoardApi = async (boardId: string) => {
     const { error } = await supabase.from("boards").delete().eq("id", boardId);
 
     if (error) {
-        console.log(error);
         return error.message;
     }
-
-    console.log("you deleted board!");
 };
 
 export const createTaskApi = async (
     taskData: TCreateTaskData
-): Promise<ITask | null> => {
+): Promise<TTask | null> => {
     const { data, error } = await supabase
         .from("tasks")
         .insert([taskData])
         .select();
 
     if (error) {
-        console.log(error);
         return null;
     }
-    console.log(data[0]);
     return data[0];
 };
 
 export const updateTaskApi = async (
     taskId: string,
     taskData: TUpdateTaskData
-): Promise<ITask | null> => {
+): Promise<TTask | null> => {
     const { data, error } = await supabase
         .from("tasks")
         .update(taskData)
@@ -202,11 +183,9 @@ export const updateTaskApi = async (
         .select();
 
     if (error || !data.length) {
-        console.log(error || "something went wrong");
         return null;
     }
 
-    console.log(data[0]);
     return data[0];
 };
 
@@ -214,41 +193,34 @@ export const deleteTaskApi = async (taskId: string) => {
     const { error } = await supabase.from("tasks").delete().eq("id", taskId);
 
     if (error) {
-        console.log(error);
         return error;
     }
-
-    console.log("you deleted task!");
 };
 
-export const getUserTasksApi = async (userId: string): Promise<ITask[] | null> => {
+export const getUserTasksApi = async (
+    userId: string
+): Promise<TTask[] | null> => {
     const { data: tasks, error } = await supabase
         .from("tasks")
         .select("*")
         .eq("user_id", userId);
 
     if (error || !tasks.length) {
-        console.log(error || "something went wrong");
-        return null;
+        return [];
     }
-
-    console.log(tasks);
     return tasks;
 };
 
-export const getBoardTasksApi = async (
-    boardId: string
-): Promise<ITask[] | null> => {
-    let { data: tasks, error } = await supabase
-        .from("tasks")
-        .select("*")
-        .eq("board_id", boardId);
+// export const getBoardTasksApi = async (
+//     boardId: string
+// ): Promise<TTask[] | null> => {
+//     let { data: tasks, error } = await supabase
+//         .from("tasks")
+//         .select("*")
+//         .eq("board_id", boardId);
 
-    if (error || !tasks.length) {
-        console.log(error || "something went wrong");
-        return null;
-    }
-
-    console.log(tasks);
-    return tasks;
-};
+//     if (error || !tasks.length) {
+//         return [];
+//     }
+//     return tasks;
+// };

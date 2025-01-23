@@ -1,25 +1,53 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "../../store";
-import { logOut } from "../../store/slices";
-import { Preloader } from "../../components/ui";
-import { TaskCard } from "../../components";
+import { createBoard, getUserBoards, getUserTasks } from "../../store/slices";
+import { Board } from "../../components";
+import { BoardList, EmptyBoard } from "./style";
+import { AddButton, Preloader } from "../../components/ui";
 
 export const HomePage: FC = () => {
     const dispatch = useDispatch();
+    const { id } = useSelector((state) => state.user);
+    const { boards, loading } = useSelector((state) => state.boards);
+    const [creatingBoard, setCreatingBoard] = useState(false);
+    const [gettingData, setGettingData] = useState(false);
+
+    const handleButtonClick = () => {
+        setCreatingBoard(true);
+        dispatch(createBoard({ name: "Новая доска" })).then(() =>
+            setCreatingBoard(false)
+        );
+    };
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getUserBoards(id));
+            dispatch(getUserTasks(id));
+        }
+    }, [id]);
+
+    if (gettingData) return <Preloader loading={gettingData}></Preloader>;
 
     return (
-        <TaskCard
-            task={{
-                board_id: "board id",
-                completed: true,
-                created_at: "date",
-                deadline: "25.01.2025",
-                description:
-                    "Ветклиника работает каждый день с 10:00 до 18:00, надо заранее записаться!",
-                id: "task id",
-                title: "Сводить кота к ветеринару",
-                user_id: "user id",
-            }}
-        ></TaskCard>
+        <BoardList>
+            {boards.length ? (
+                <>
+                    {boards.map((board) => (
+                        <Board
+                            boardId={board.id}
+                            name={board.name}
+                            key={board.id}
+                        />
+                    ))}{" "}
+                </>
+            ) : (
+                <EmptyBoard>Здесь могла быть ваша доска...</EmptyBoard>
+            )}
+            {creatingBoard ? (
+                <Preloader loading={creatingBoard}></Preloader>
+            ) : (
+                <AddButton onClick={handleButtonClick} />
+            )}
+        </BoardList>
     );
 };

@@ -5,11 +5,9 @@ import { Preloader } from "../ui";
 
 export const ProtectedRoute = ({ children, type }: ProtectedRouteProps) => {
     const { isAuthChecked, loading, id } = useSelector((state) => state.user);
-    // const location = useLocation();
-    // const from = location.state?.from || '/';
 
     if (type === "auth" && !id && isAuthChecked && !loading) {
-        return <Navigate to="/signin" />;
+        return <Navigate to="/auth" />;
     }
 
     if (type === "unauth" && id && isAuthChecked && !loading) {

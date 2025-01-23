@@ -17,9 +17,10 @@ import {
 import { Button, Input } from "../ui";
 import { COLORS } from "../ui/constants";
 import { useDispatch } from "../../store";
-import { logOut } from "../../store/slices";
+import { createTask, logOut } from "../../store/slices";
 import { AddNewTaskForm } from "..";
 import { Modal } from "../modal";
+import { TCreateTaskData } from "../../services/types";
 
 export const Header: FC = () => {
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -34,8 +35,15 @@ export const Header: FC = () => {
         // логика поиска задачи
     };
 
-    const handleAddNewTask = () => {
-        console.log("add new task");
+    const handleAddNewTask = async (data: TCreateTaskData) => {
+        await dispatch(
+            createTask({
+                title: data.title,
+                description: data.description,
+                board_id: data.board_id,
+                deadline: data.deadline,
+            })
+        );
         setShowModal(false);
     };
 
@@ -50,6 +58,7 @@ export const Header: FC = () => {
                 <Input type="text" label="Найти задачу" />
                 <Button
                     variant="icon"
+                    nohover
                     style={{
                         position: "relative",
                         right: "50px",
@@ -98,9 +107,7 @@ export const Header: FC = () => {
                     title="Добавить задачу"
                     onClose={() => setShowModal(false)}
                 >
-                    <AddNewTaskForm
-                        onSubmit={handleAddNewTask}
-                    ></AddNewTaskForm>
+                    <AddNewTaskForm onSubmit={handleAddNewTask} />
                 </Modal>
             )}
         </HeaderContainer>

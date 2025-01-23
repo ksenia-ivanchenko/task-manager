@@ -13,7 +13,7 @@ export const StyledLabel = styled.label`
     position: absolute;
     left: 15px;
     pointer-events: none;
-    transform: translateY(15px);
+    transform: translateY(12px);
     transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
 `;
 

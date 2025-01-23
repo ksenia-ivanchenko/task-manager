@@ -24,5 +24,8 @@ export const getUserBoards = createAsyncThunk(
 
 export const deleteBoard = createAsyncThunk(
     "board/delete",
-    async (boardId: string) => await deleteBoardApi(boardId)
+    async (boardId: string) => {
+        await deleteBoardApi(boardId);
+        return boardId;
+    }
 );

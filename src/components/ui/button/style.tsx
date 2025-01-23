@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { COLORS } from "../constants";
+import { StyledButtonProps } from "./types";
 
-export const StyledButton = styled.button<{
-    $variant: "primary" | "secondary" | "icon";
-}>`
+export const StyledButton = styled.button<StyledButtonProps>`
     box-sizing: border-box;
     padding: 12px 16px;
     font-size: 16px;
@@ -20,6 +19,10 @@ export const StyledButton = styled.button<{
             : $variant === "icon"
             ? "transparent"
             : COLORS.LIGHT_BACKGROUND};
+
+    &:active {
+        scale: 0.9;
+    }
 
     ${({ $variant }) =>
         $variant === "primary" &&
@@ -46,10 +49,44 @@ export const StyledButton = styled.button<{
             }
         `}
 
+        ${({ $variant, $nohover }) =>
+        $variant === "icon" &&
+        !$nohover &&
+        `
+                &:hover {
+                    background-color: ${COLORS.LIGHT_BACKGROUND};
+                }
+            `}
+
     &:disabled {
         cursor: not-allowed;
         opacity: 0.6;
         box-shadow: none;
         background-color: ${COLORS.BUTTON_DISABLED};
     }
+`;
+
+export const AddContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    min-block-size: 100px;
+
+    &:hover {
+        background-color: ${COLORS.LIGHT_BACKGROUND};
+        cursor: pointer;
+    }
+
+    &:active {
+        scale: 0.9;
+    }
+`;
+
+export const DeleteButtonContainer = styled.div`
+    position: absolute;
+    top: -20px;
+    left: 5px;
 `;

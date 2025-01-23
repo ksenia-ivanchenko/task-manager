@@ -4,7 +4,6 @@ import { COLORS } from "../ui/constants";
 export const StyledCard = styled.div`
     border: 1px solid ${COLORS.MAIN_DARK};
     border-radius: 5px;
-    max-inline-size: 400px;
     padding: 20px;
     line-height: 1.5;
     display: flex;
@@ -13,12 +12,11 @@ export const StyledCard = styled.div`
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
+    inline-size: 100%;
 
     &:hover {
-        scale: 1.1;
+        scale: 1.02;
     }
-
-    margin: 50px;
 `;
 
 export const TitleContainer = styled.div`
@@ -34,10 +32,4 @@ export const Deadline = styled.div`
 
 export const IconWrapper = styled.div`
     display: flex;
-`;
-
-export const DeleteButtonContainer = styled.div`
-    position: absolute;
-    top: -20px;
-    left: 5px;
 `;

@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { AuthForm } from "../../components";
 import { useDispatch, useSelector } from "../../store";
-import { signInWithEmail, signUp } from "../../store/slices";
+import {
+    createBoard,
+    getUserBoards,
+    signInWithEmail,
+    signUp,
+} from "../../store/slices";
 import { AuthFormContainer, FormPage, StyledAuth, SwitchButton } from "./style";
 import { TEmailLoginData, TRegisterData } from "../../services/types";
 import { Preloader } from "../../components/ui";
@@ -9,10 +14,11 @@ import { Preloader } from "../../components/ui";
 export const AuthPage: React.FC = () => {
     const [isFlipped, setIsFlipped] = useState(false);
     const dispatch = useDispatch();
-    const { error } = useSelector((state) => state.user);
+    const { error, id } = useSelector((state) => state.user);
 
     const handleSignUp = async (data: TRegisterData) => {
         await dispatch(signUp({ email: data.email, password: data.password }));
+        dispatch(createBoard({ name: "Все задачи" }));
     };
 
     const handleSignIn = async (data: TEmailLoginData) => {

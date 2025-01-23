@@ -26,6 +26,8 @@ export type TUpdateBoardData = {
 export type TCreateTaskData = {
     title: string;
     board_id: string;
+    description?: string;
+    deadline?: Date;
 };
 
 export type TUpdateTaskData = {

@@ -1,9 +1,13 @@
+import { TCreateTaskData } from "../../services/types";
+
 export type IAddNewTaskFormInputs = {
     title: string;
     description: string;
-    deadline: string;
+    board_id: string;
+    deadline?: Date | null;
 };
 
 export type TAddNewTaskFormProps = {
-    onSubmit: () => void;
+    onSubmit: (data: TCreateTaskData) => void;
+    defaultBoard?: string;
 };
