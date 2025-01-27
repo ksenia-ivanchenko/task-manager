@@ -10,7 +10,7 @@ export const HomePage: FC = () => {
     const { id } = useSelector((state) => state.user);
     const { boards, loading } = useSelector((state) => state.boards);
     const [creatingBoard, setCreatingBoard] = useState(false);
-    const [gettingData, setGettingData] = useState(false);
+    const [isRendered, setIsRendered] = useState(false);
 
     const handleButtonClick = () => {
         setCreatingBoard(true);
@@ -26,27 +26,39 @@ export const HomePage: FC = () => {
         }
     }, [id]);
 
-    if (gettingData) return <Preloader loading={gettingData}></Preloader>;
+    useEffect(() => {
+        if (!loading && boards.length >= 0) {
+            const timer = setTimeout(() => setIsRendered(true), 300);
+            return () => clearTimeout(timer);
+        }
+    }, [loading, boards]);
 
     return (
         <BoardList>
-            {boards.length ? (
+            {!isRendered ? (
+                <Preloader loading={!isRendered} />
+            ) : (
                 <>
-                    {boards.map((board) => (
-                        <Board
-                            boardId={board.id}
-                            name={board.name}
-                            key={board.id}
-                        />
-                    ))}{" "}
+                    {!!boards.length && (
+                        <>
+                            {boards.map((board) => (
+                                <Board
+                                    boardId={board.id}
+                                    name={board.name}
+                                    key={board.id}
+                                />
+                            ))}
+                        </>
+                    )}
+                    {!boards.length && !loading && (
+                        <EmptyBoard>Здесь могла быть ваша доска...</EmptyBoard>
+                    )}
+                    {creatingBoard ? (
+                        <Preloader loading={creatingBoard} />
+                    ) : (
+                        <AddButton onClick={handleButtonClick} />
+                    )}
                 </>
-            ) : (
-                <EmptyBoard>Здесь могла быть ваша доска...</EmptyBoard>
-            )}
-            {creatingBoard ? (
-                <Preloader loading={creatingBoard}></Preloader>
-            ) : (
-                <AddButton onClick={handleButtonClick} />
             )}
         </BoardList>
     );

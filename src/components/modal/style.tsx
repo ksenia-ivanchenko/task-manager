@@ -1,19 +1,19 @@
 import { styled } from "styled-components";
 import { COLORS } from "../ui/constants";
 
-export const StyledModal = styled.div`
+export const StyledModal = styled.div<{ $isOpen: boolean }>`
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
     z-index: 9999;
     margin: auto;
     background-color: ${COLORS.LIGHT_BACKGROUND};
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04),
-        0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
-        0px 0px 1px rgba(0, 0, 0, 0.04);
+    transition: opacity 0.2s ease-out;
+    pointer-events: ${({ $isOpen }) => ($isOpen ? "auto" : "none")};
 `;
 
 export const ModalHeader = styled.div`
@@ -29,9 +29,13 @@ export const ModalContent = styled.div`
     align-items: center;
 `;
 
-export const ModalOverlay = styled.div`
+export const ModalOverlay = styled.div<{ $isOpen: boolean }>`
     position: fixed;
     inset: 0;
+    height: 100%;
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 2;
+    pointer-events: ${({ $isOpen }) => ($isOpen ? "auto" : "none")};
+    opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+    transition: opacity 0.2s ease-in-out;
 `;

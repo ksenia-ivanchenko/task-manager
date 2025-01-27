@@ -49,14 +49,28 @@ export const StyledButton = styled.button<StyledButtonProps>`
             }
         `}
 
-        ${({ $variant, $nohover }) =>
+    ${({ $variant, $nohover }) =>
         $variant === "icon" &&
         !$nohover &&
         `
-                &:hover {
-                    background-color: ${COLORS.LIGHT_BACKGROUND};
-                }
-            `}
+            &:hover {
+                background-color: ${COLORS.LIGHT_BACKGROUND};
+            }
+        `}
+
+    ${({ $variant }) =>
+        $variant === "text" &&
+        `
+            background: none;
+            color: ${COLORS.MAIN_DARK};
+
+            &:hover {
+                background-color: ${COLORS.BUTTON_SECONDARY_HOVER};
+            }
+            &:active {
+                background-color: ${COLORS.BUTTON_SECONDARY_ACTIVE};
+            }
+        `}
 
     &:disabled {
         cursor: not-allowed;

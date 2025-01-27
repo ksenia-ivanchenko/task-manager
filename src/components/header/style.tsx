@@ -8,6 +8,10 @@ export const HeaderContainer = styled.header`
     box-shadow: 0 4px 10px ${COLORS.SHADOW};
     background: ${COLORS.LIGHT_BACKGROUND};
     padding: 20px 10px;
+
+    @media (max-width: 700px) {
+        justify-content: flex-start;
+    }
 `;
 
 export const Logo = styled.button`
@@ -20,16 +24,32 @@ export const Logo = styled.button`
     font-size: 20px;
     font-weight: bold;
     color: ${COLORS.MAIN_DARK};
+    margin-inline-end: 20px;
+
+    @media (max-width: 500px) {
+        span {
+            display: none;
+        }
+    }
 `;
 
 export const SearchWrapper = styled.form`
+    position: relative;
     display: flex;
-    inline-size: 500px;
+    inline-size: clamp(18.75rem, 12.1011rem + 21.2766vw, 31.25rem);
+
+    @media (max-width: 700px) {
+        inline-size: calc(100% - 50px);
+    }
 `;
 
 export const IconWrapper = styled.div`
     display: flex;
-    gap: 20px;
+    gap: clamp(0rem, -1.1824rem + 2.7027vw, 1.25rem);
+
+    @media (max-width: 700px) {
+        display: none;
+    }
 `;
 
 export const AddIconContainer = styled.div`
@@ -53,6 +73,8 @@ export const DropdownMenu = styled.div<{ $show: boolean }>`
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: ${({ $show }) => ($show ? "auto" : "none")};
+
     ${({ $show }) =>
         $show &&
         css`

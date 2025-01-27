@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 
-export type TModalProps = {
-    title: string;
+export type SidebarProps = {
     onClose: () => void;
+    children: ReactNode;
     isOpen: boolean;
-    children?: ReactNode;
 };
